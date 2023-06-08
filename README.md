@@ -32,15 +32,13 @@ The API uses JSON Web Tokens (JWT) for user authentication. To access the protec
 ### User Routes - /api/users
 
 * POST - /register 
-    
-    body : {
-        name : "**",
-        emailId : "--@--.co-",
-        password : "***"
-    }
-    
-    Creates a new user account.
-    Returns : JWT upon successful registration.
+body : {
+    name : "**",
+    emailId : "--@--.co-",
+    password : "***"
+}
+Creates a new user account.
+Returns : JWT upon successful registration.
 
 * POST - /login 
     
