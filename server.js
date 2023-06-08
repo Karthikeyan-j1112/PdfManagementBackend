@@ -14,10 +14,13 @@ app.use(express.json())
 
 const port = process.env.PORT
 
+// routes for user register and login
 app.use('/api/users', UserRoutes)
 
+// routes for pdf file and thier details
 app.use('/api/files', FileRoutes)
 
+// routes for comments 
 app.use('/api/comments',CommentRoutes)
 
 try {

@@ -40,6 +40,8 @@ const uploadToDrive = async (file) => {
     return response;
 }
 
+// POST - /api/files/upload
+
 const uploadFile = async (req, res) => {
     try {
         const files = req.files
@@ -59,6 +61,8 @@ const uploadFile = async (req, res) => {
         res.status(400).json({ result: 'fail', error })
     }
 }
+
+// GET - /api/files/search/:id
 
 const searchFiles = async (req, res) => {
     try {
@@ -82,6 +86,8 @@ const searchFiles = async (req, res) => {
         res.status(400).json({ result: 'fail', error })
     }
 }
+
+// GET - /api/files/getpdf/:id
 
 const getPdf = async (req, res) => {
     try {
@@ -115,6 +121,8 @@ const getPdf = async (req, res) => {
     }
 }
 
+// GET - /api/files/getpdfdetails/:id
+
 const getPdfDetails = async (req, res) => {
     try {
         const file = await FileModel.findById(req.params.id, { name: 1, createdAt: 1, userId: 1, inviteId: 1 })
@@ -132,6 +140,8 @@ const getPdfDetails = async (req, res) => {
         res.status(400).json({ result: 'fail', error })
     }
 }
+
+// GET - /api/files/getpdf/:id
 
 const getInvitePdf = async (req, res) => {
     try {
@@ -165,6 +175,8 @@ const getInvitePdf = async (req, res) => {
     }
 }
 
+// GET - /api/files/getfilecomments/:id
+
 const getFileComments = async (req, res) => {
     try {
 
@@ -189,11 +201,28 @@ const getFileComments = async (req, res) => {
     }
 }
 
+const getInvitePdfDetails = async (req, res) => {
+    try {
+        const file = await FileModel.findById(req.params.id, { name: 1, inviteId: 1 })
+
+        if (file.inviteId.toString() !== req.query.inviteId) {
+            return res.status(401).json({ result: 'fail', error: "You don't have access to the file" })
+        }
+
+        res.json({ result: 'success', name: file.name })
+
+    } catch (error) {
+        console.log(error);
+        res.status(400).json({ result: 'fail', error })
+    }
+}
+
 module.exports = {
     uploadFile,
     searchFiles,
     getPdf,
     getPdfDetails,
     getInvitePdf,
-    getFileComments
+    getFileComments,
+    getInvitePdfDetails
 }
