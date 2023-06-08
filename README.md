@@ -32,67 +32,85 @@ The API uses JSON Web Tokens (JWT) for user authentication. To access the protec
 ### User Routes - /api/users
 
 * POST - /register 
+    
     body : {
         name : "**",
         emailId : "--@--.co-",
         password : "***"
     }
+    
     Creates a new user account.
     Returns : JWT upon successful registration.
 
 * POST - /login 
+    
     body : {     
         emailId : "--@--.co-",
         password : "***"
     }
+    
     Authenticates the user by verifying the provided email and password. 
     Returns : JWT upon successful login.
 
 * POST - /verify
+    
     headers : {
         Authorization: "Bearer ${token}"
     }
+    
     Verify the provided token is valid or not. 
 
 ### File Routes - /api/files
 #### Protected 
 
 * POST - /upload
+    
     headers : {
         'Content-Type': 'multipart/form-data',
         Authorization: "Bearer ${token}"
     }
+    
     Recieve pdf files with content type multipart/form-data in request body and JWT token in header. It store the files in Google drive and store the google drive file id in MongoDB. 
     Returns a success message
 
 * GET - /searchFiles/:name
+    
     headers : {     
         Authorization: "Bearer ${token}"
     }
+    
     params: {
         page 
     }
+    
     Get the details of all the files that match the name with the name provided in the url.
     Returns the list of file detials like fileId, name, uploaded date. Page parameter is used for pagination.
 
 * GET - /getpdf/:fileId
+    
     responseType: 'blob',
+    
     headers : {     
         Authorization: "Bearer ${token}"
     }
+    
     Returns the pdf file that matches the fileId in the url
 
 * GET - /getpdfdetails/:fileId
+    
     headers : {     
         Authorization: "Bearer ${token}"
     }
+    
     Get the details of the file that matches the fileId with the id provided in the url
     Returns the pdf file details like name, uploaded date , fileId and InviteId
 
 * GET - /getFileComments/:fileId
+    
     headers : {     
         Authorization: "Bearer ${token}"
     }
+    
     Returns the list of all the comments of the file whose fileId matches with the id in the url
 
 #### Unprotected 
@@ -100,15 +118,19 @@ The API uses JSON Web Tokens (JWT) for user authentication. To access the protec
 Note: even these routes are unprotected (i.e, doesn't need any JWT token). But it requires InviteId in params
 
 * GET - /getpdfinvite/:fileId
+    
     params: {
         inviteId : "**"
     }
+    
     Returns the pdf file that matches the fileId in the url after verifying that inviteId matches the inviteId of the respective file.
 
 * GET - /getpdfinvitedetails/:fileId
+    
     params: {
         inviteId : "**"
     }
+    
     Get the details of the file that matches the fileId with the id provided in the url. Verify that inviteId matches the inviteId of the respective file.
     Returns the pdf file details like name, uploaded date , fileId and InviteId
 
@@ -117,19 +139,25 @@ Note: even these routes are unprotected (i.e, doesn't need any JWT token). But i
 #### Unprotected
 
 * POST - /addComment/:fileId
+    
     body: {
         comment : "---" ,
         userName: "---", 
         inviteId : "**"
     }
+    
     Checks whether the inviteId matches the inviteId of the respective fileId. Add a new comment with given userName and fileId.
+    
     Returns a success message
 
 * GET - /getComments/:fileId
+    
     params: {
         inviteId : "**"
     }
+    
     Checks whether the inviteId matches the inviteId of the respective fileId.
+    
     Returns the list of all the comments of the file whose fileId matches with the id in the url
 
 This is hosted online with the help of  [render.com](https://render.com/)
