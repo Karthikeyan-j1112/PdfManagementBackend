@@ -66,8 +66,7 @@ const uploadFile = async (req, res) => {
 
 const searchFiles = async (req, res) => {
     try {
-        console.log(req.params.id==='null');
-        const search = '.*' + (req.params.id) + '.*'
+        const search = '.*' + (req.params.id==='null'?'':req.params.id) + '.*'
         const limit = 10
         let files = await FileModel.find({ userId: req.user, name: { $regex: search, $options: 'i' } }).limit(limit).skip(limit * Math.max(0, req.query.page))
 
